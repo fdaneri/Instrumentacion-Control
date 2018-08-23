@@ -1,3 +1,5 @@
+#este programa anda
+
 import pyaudio
 import numpy as np
 
