@@ -1,3 +1,4 @@
+#titulo: adqsonido
 import pyaudio
 import audioop
 import matplotlib.pyplot as plt
