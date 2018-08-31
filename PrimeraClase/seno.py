@@ -4,7 +4,7 @@ import pylab as plt
 import time
 from scipy.signal import find_peaks
 from scipy import signal
-
+#hola mundo
 def seno(frecuencia, duracion, amplitud=1, fs=192000):
     """
     Esta función tiene como output una funcion seno de una cierta duración y frecuencia.
