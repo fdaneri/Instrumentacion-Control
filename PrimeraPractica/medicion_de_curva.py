@@ -23,7 +23,7 @@ def generador_de_senhal(frecuencia, duracion, amplitud, funcion, fs=192000):
         print("Input no v√°lido. Introducir sin o rampa")
         data = 0
     return tiempo, data
- 
+
 def play_tone(frecuencia, duracion, amplitud=1, fs=192000, wait=True):
     """
     Esta funci√≥n tiene como output un tono de una cierta duraci√≥n y frecuencia.
@@ -49,6 +49,50 @@ def playrec_tone(frecuencia, duracion, amplitud=0.1, fs=192000):
     grabacion = sd.playrec(data, blocking=True)
     
     return tiempo, data, grabacion
+
+
+
+def secuencia(frecuencia, duracion, amplitud=0.1, fs=192000):
+    '''
+    Extraigo secuencia de datos = 10 picos a partir del 1er segundo
+    
+    '''    
+    tiempo, data, grabacion = playrec_tone(frecuencia, duracion, amplitud=0.1, fs=192000)
+
+    #descarto el primer segundo, me quedo con los datos a partir de 1 seg en adelante
+    t=1.0   #tiempo que descarto desde t=0
+    i=0
+    while tiempo[i]<t:
+        i+=1
+    
+    tiempo = tiempo[i:]
+    data = data[i:]    
+    grabacion = grabacion[i:]
+    
+    #tomo los primeros 10 picos a partir de t=1.00 seg    
+    j=0    # j es un contador de maximos
+    i=1    # i recorre todo el array del seno
+
+    while i<len(data)-1 and j<10:
+        
+        if data[i-1] < data[i] and data[i] > data[i+1]:
+            j+=1
+        i+=1
+          
+    tiempo = tiempo[:i]
+    data = data[:i]    
+    grabacion = grabacion[:i]
+
+    #grafico seÒal de entrada vs seÒal de salida    
+    plt.plot(tiempo,data,'-r', label='$emitted$')
+    plt.plot(tiempo,grabacion,'g^', label='$recorded$')   #aparecen dos label recorded porque son DOS CANALES de grabacion
+    plt.xlabel('Tiempo(s)')
+    plt.ylabel('Amplitud')
+    plt.legend(loc='upper right')  
+    plt.show()
+    
+    return tiempo, data, grabacion
+    
 
 def medicion_curva():
     """
