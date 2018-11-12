@@ -24,26 +24,26 @@ frecuencia = '26KHz'
 señal = 'Sin'
 que_medimos = 'Alising'
 
-####------->    Canal 0 y Canal 1
-#with nidaqmx.Task() as task:
-#    ai0 = task.ai_channels.add_ai_voltage_chan("Dev{}/ai0".format(numero_de_dispositivo), 
-#                      terminal_config=constants.TerminalConfiguration.RSE, 
-#                      units=constants.VoltageUnits.VOLTS)  #pusimos esta linea para setear el modo de medición
-#
-#    ai1 = task.ai_channels.add_ai_voltage_chan("Dev{}/ai1".format(numero_de_dispositivo), 
-#                      terminal_config=constants.TerminalConfiguration.RSE,
-#                      units=constants.VoltageUnits.VOLTS)  #pusimos esta linea para setear el modo de medición
-#    task.timing.cfg_samp_clk_timing(sample_rate) #agregamos frecuencia de sample rate 
-#    data = task.read(number_of_samples_per_channel=samples_per_channel)
-#
-#    plt.plot(np.arange(samples_per_channel)/sample_rate,data[0],'s-', label = 'Canal 0')
-#    plt.plot(np.arange(samples_per_channel)/sample_rate,data[1],'s-', label = 'Canal 1')
-#   
-#    plt.xlabel('seg')
-#    plt.ylabel('V')
-#    plt.show()
-#    plt.legend(loc='upper right')
-#    plt.show()
+####------->    Canal 0 y Canal 1: medición en simultáneo de ambos canales
+with nidaqmx.Task() as task:
+    ai0 = task.ai_channels.add_ai_voltage_chan("Dev{}/ai0".format(numero_de_dispositivo), 
+                      terminal_config=constants.TerminalConfiguration.RSE, 
+                      units=constants.VoltageUnits.VOLTS)  #pusimos esta linea para setear el modo de medición
+
+    ai1 = task.ai_channels.add_ai_voltage_chan("Dev{}/ai1".format(numero_de_dispositivo), 
+                      terminal_config=constants.TerminalConfiguration.RSE,
+                      units=constants.VoltageUnits.VOLTS)  #pusimos esta linea para setear el modo de medición
+    task.timing.cfg_samp_clk_timing(sample_rate) #agregamos frecuencia de sample rate 
+    data = task.read(number_of_samples_per_channel=samples_per_channel)
+
+    plt.plot(np.arange(samples_per_channel)/sample_rate,data[0],'s-', label = 'Canal 0')
+    plt.plot(np.arange(samples_per_channel)/sample_rate,data[1],'s-', label = 'Canal 1')
+   
+    plt.xlabel('seg')
+    plt.ylabel('V')
+    plt.show()
+    plt.legend(loc='upper right')
+    plt.show()
 
 
 ####------->    Canal 0
