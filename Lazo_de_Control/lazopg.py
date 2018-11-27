@@ -98,9 +98,9 @@ with nidaqmx.Task() as rtask:
 
             
             if T > periodo_ref:
-                act = act + .1
+                act = act + .05
             else:
-                act = act - .1
+                act = act - .05
             
             print(act)
 
